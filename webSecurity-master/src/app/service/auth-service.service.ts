@@ -24,8 +24,11 @@ export class AuthServiceService {
 
       this.setAuthState(true, roles.includes('ADMIN'), roles.includes('GERENTE'), roles.includes('USER'));
       localStorage.setItem('token', token);
-      console.log(localStorage.getItem('adminStatus'));
-      this.router.navigate(['/dashboard']);
+
+      if(roles.includes('ADMIN')) this.router.navigate(['/admin']);
+      else if(roles.includes('GERENTE')) this.router.navigate(['/gerente']);
+      else if(roles.includes('USER')) this.router.navigate(['/profile']);
+
     } catch (error) {
       console.error('Invalid token', error);
       this.logout();

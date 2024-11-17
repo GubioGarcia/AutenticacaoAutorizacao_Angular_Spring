@@ -11,7 +11,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
       return true;
     } else {
       alert("Você não tem permissão");
-      router.navigate(['/dashboard']);
+      router.navigate(['/home']);
       return false;
     }
   } else {

@@ -1,15 +1,15 @@
 
 <div class="page">
   <div class="home-container">
-    <h1>Bem-vindo ao Sistema de Estudo de Guards no Angular</h1>
+    <h1>Autenicação e Autorização com Angular</h1>
     <p>
-      Este sistema foi desenvolvido para demonstrar o uso de Guards no Angular. Guards permitem controlar o acesso a diferentes partes de uma aplicação baseado em regras de autenticação e autorização.
+      Este sistema foi desenvolvido para demonstrar o uso de Guards no Angular no controle de acesso a diferentes partes de uma aplicação baseado em regras de autenticação e autorização.
     </p>
 
     <h2>Funcionalidades do Sistema:</h2>
     <ul>
       <li><strong>Autenticação:</strong> Implementação de Guards para controlar se o usuário está autenticado antes de acessar certas rotas.</li>
-      <li><strong>Autorização:</strong> Verificação de permissões específicas para acessar determinados recursos, como roles (admin, usuário comum).</li>
+      <li><strong>Autorização:</strong> Verificação de permissões específicas para acessar determinados recursos, através de roles (admin, gerente e usuário comum).</li>
     </ul>
 
     <p>
@@ -19,9 +19,10 @@
     <h3>Links úteis:</h3>
     <ul class="buttons">
       <p-button (click)="login()">Login</p-button>
-      <p-button (click)="adm()">ADM</p-button>
+      <p-button (click)="adm()">Admin</p-button>
+      <p-button (click)="gerente()">Gerente</p-button>
       <p-button (click)="profile()">Profile</p-button>
-      <p-button (click)="dashboard()">Dashboard</p-button>
+      <button pButton type="button" (click)="logout()" label="Sair" class="p-button-secondary"></button>
     </ul>
   </div>
 </div>

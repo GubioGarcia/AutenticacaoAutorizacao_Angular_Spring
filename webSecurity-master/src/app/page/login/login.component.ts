@@ -29,7 +29,6 @@ export class LoginComponent {
     this.loginService.login(this.username, this.password).subscribe({
       next: (response) => {
         this.authService.login(response);
-        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         alert("Usuário ou senha inválidos");

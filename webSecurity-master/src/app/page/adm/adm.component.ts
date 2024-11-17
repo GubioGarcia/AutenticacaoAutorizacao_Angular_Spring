@@ -20,22 +20,5 @@ import { ToastModule } from 'primeng/toast';
   styleUrl: './adm.component.css'
 })
 export class AdmComponent {
-  constructor(private _router: Router, private _service: AuthServiceService) {
-  }
-
-  gerente(){
-    this._router.navigate(['/gerente']);
-  }
-
-  adm() {
-    this._router.navigate(['/admin']);
-  }
-
-  profile(){
-    this._router.navigate(['/profile']);
-  }
-
-  logout(){
-    this._service.logout();
-  }
+  constructor(private _router: Router, private _service: AuthServiceService) {}
 }

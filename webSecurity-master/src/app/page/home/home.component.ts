@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import { ButtonModule } from 'primeng/button';
+import { AuthServiceService } from '../../service/auth-service.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ import { ButtonModule } from 'primeng/button';
 export class HomeComponent {
 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private service: AuthServiceService) {
   }
 
   login(){
@@ -25,11 +26,15 @@ export class HomeComponent {
     this.router.navigate(['/admin']);
   }
 
-  dashboard(){
-    this.router.navigate(['/dashboard']);
+  gerente(){
+    this.router.navigate(['/gerente']);
   }
 
   profile(){
     this.router.navigate(['/profile']);
+  }
+
+  logout(){
+    this.service.logout();
   }
 }
