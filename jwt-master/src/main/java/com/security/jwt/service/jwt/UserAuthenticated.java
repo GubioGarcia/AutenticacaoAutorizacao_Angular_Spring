@@ -15,10 +15,11 @@ public class UserAuthenticated implements UserDetails {
         this.user = user;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(() -> "read");
+        return this.user.getRoles().stream()
+                .map(role -> (GrantedAuthority) () -> role)
+                .toList();
     }
 
     @Override

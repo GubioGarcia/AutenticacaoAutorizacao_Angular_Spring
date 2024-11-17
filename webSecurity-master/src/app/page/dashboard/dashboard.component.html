@@ -2,14 +2,13 @@
 <div class="rotas">
   <h3>Links úteis:</h3>
   <ul class="buttons">
-    <button (click)="adm()">ADM</button>
-    <button (click)="profile()">Profile</button>
-    <button (click)="dashboard()">Dashboard</button>
-    <button (click)="logout()">Logout</button><br/>
+    <p-button ngIf="isAdmin" (click)="adm()">ADM</p-button>
+    <p-button (click)="profile()">Profile</p-button>
+    <p-button (click)="dashboard()">Dashboard</p-button>
+    <p-button (click)="logout()">Logout</p-button><br/>
   </ul>
 </div>
 <div class="listUsers">
   <h2>Usuários</h2>
   <app-user></app-user>
 </div>
-

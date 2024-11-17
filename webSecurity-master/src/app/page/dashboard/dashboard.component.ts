@@ -4,13 +4,15 @@ import {AuthServiceService} from "../../service/auth-service.service";
 import { ProfileComponent } from "../profile/profile.component";
 import { UtilService } from '../../service/util.service';
 import { UserComponent } from "../user/user.component";
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     ProfileComponent,
-    UserComponent
+    UserComponent,
+    ButtonModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -18,13 +20,16 @@ import { UserComponent } from "../user/user.component";
 export class DashboardComponent {
 
   title: string = '';
+  isAdmin: boolean = false;
 
   constructor(private _router: Router,
     private _service: AuthServiceService,
     private utilService: UtilService) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isAdmin = this._service.isAdmin;
+  }
 
   dashboard(){
     this._router.navigate(['/dashboard']);
@@ -35,7 +40,7 @@ export class DashboardComponent {
   }
 
   profile(){
-    this._router.navigate(['/user-form']);
+    this._router.navigate(['/profile']);
   }
 
   logout(){

@@ -1,62 +1,59 @@
 import { Injectable } from '@angular/core';
 import { Router } from "@angular/router";
+import { jwtDecode } from "jwt-decode";
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServiceService {
-
   isAutenticado: boolean = false;
   isAdmin: boolean = false;
+  isGerente: boolean = false;
+  isUser: boolean = false;
+  private user: User | null = null;
 
   constructor(private router: Router) {
-    const authStatus = localStorage.getItem('authStatus');
-    const adminStatus = localStorage.getItem('adminStatus');
-
-    this.isAutenticado = authStatus === 'true';
-    this.isAdmin = adminStatus === 'true';
+    this.restoreAuthState();
   }
 
-  login(token: string): void {
-    const decodedToken: any = this.decodeToken(token);
+  login(token: string) {
+    try {
+      const decodedToken: any = jwtDecode(token);
+      const roles: string[] = decodedToken.roles || [];
 
-    if (decodedToken && decodedToken.roles) {
-      this.setAuthState(true, decodedToken.roles.includes('ADMIN'));
+      this.setAuthState(true, roles.includes('ADMIN'), roles.includes('GERENTE'), roles.includes('USER'));
       localStorage.setItem('token', token);
+      console.log(localStorage.getItem('adminStatus'));
       this.router.navigate(['/dashboard']);
-    } else {
+    } catch (error) {
+      console.error('Invalid token', error);
       this.logout();
     }
   }
 
   logout(): void {
     localStorage.clear();
-    this.setAuthState(false, false);
-    this.router.navigate(['/']);
+    this.setAuthState(false, false, false, false);
+    this.router.navigate(['/login']);
   }
 
-  private setAuthState(authStatus: boolean, adminStatus: boolean): void {
+  private setAuthState(authStatus: boolean, isAdmin: boolean, isGerente: boolean, isUser: boolean): void {
     this.isAutenticado = authStatus;
-    this.isAdmin = adminStatus;
+    this.isAdmin = isAdmin;
+    this.isGerente = isGerente;
+    this.isUser = isUser;
+
     localStorage.setItem('authStatus', JSON.stringify(authStatus));
-    localStorage.setItem('adminStatus', JSON.stringify(adminStatus));
+    localStorage.setItem('adminStatus', JSON.stringify(isAdmin));
+    localStorage.setItem('gerenteStatus', JSON.stringify(isGerente));
+    localStorage.setItem('userStatus', JSON.stringify(isUser));
   }
 
-  getAuthStatus(): boolean {
-    return JSON.parse(localStorage.getItem('authStatus') || 'false');
-  }
-
-  getAdminStatus(): boolean {
-    return JSON.parse(localStorage.getItem('adminStatus') || 'false');
-  }
-
-  private decodeToken(token: string): any {
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));  // Decodifica manualmente o payload
-      console.log(payload);
-      return payload;
-    } catch (e) {
-      return null;
-    }
+  private restoreAuthState(): void {
+    this.isAutenticado = JSON.parse(localStorage.getItem('authStatus') || 'false');
+    this.isAdmin = JSON.parse(localStorage.getItem('adminStatus') || 'false');
+    this.isGerente = JSON.parse(localStorage.getItem('gerenteStatus') || 'false');
+    this.isUser = JSON.parse(localStorage.getItem('userStatus') || 'false');
   }
 }
