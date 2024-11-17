@@ -25,6 +25,7 @@ export class UserFormComponent {
   username: string = '';
   password: string = '';
   role: string | null = null;
+  isActive: boolean = false;
 
   roles = [
     { label: 'Administrador', value: 'ADMIN' },
@@ -48,7 +49,7 @@ export class UserFormComponent {
       return;
     }
 
-    const novoUser = new User(this.username, this.password, [this.role as string]);
+    const novoUser = new User(this.username, this.password, [this.role as string], this.isActive);
 
     this.userService.adicionarUser(novoUser).subscribe({
       next: () => {

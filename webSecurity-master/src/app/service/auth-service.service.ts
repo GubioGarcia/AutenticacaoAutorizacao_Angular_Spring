@@ -59,4 +59,22 @@ export class AuthServiceService {
     this.isGerente = JSON.parse(localStorage.getItem('gerenteStatus') || 'false');
     this.isUser = JSON.parse(localStorage.getItem('userStatus') || 'false');
   }
+
+  getLoggedUser(): User | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+      const decodedToken: any = jwtDecode(token);
+      return new User(
+        decodedToken.username,
+        '',
+        decodedToken.roles || [],
+        decodedToken.active || false
+      );
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
 }

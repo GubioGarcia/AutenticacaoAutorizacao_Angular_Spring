@@ -25,6 +25,9 @@ public class User {
 
     private String password;
 
+    @Column(name = "is_active")
+    private boolean isActive;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "ENG_ROLE", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "role_id")

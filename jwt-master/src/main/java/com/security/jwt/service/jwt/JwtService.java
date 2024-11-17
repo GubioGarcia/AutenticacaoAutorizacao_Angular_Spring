@@ -22,6 +22,13 @@ public class JwtService {
         Instant now = Instant.now();
         long expiry = 36000L;
 
+        var principal = authentication.getPrincipal();
+        boolean isActive = false;
+
+        if (principal instanceof UserAuthenticated user) {
+            isActive = user.isEnabled();
+        }
+
         var roles = authentication
                 .getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -31,8 +38,9 @@ public class JwtService {
                 .issuer("jwt")
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiry))
-                .subject(authentication.getName())
+                .claim("username", authentication.getName())
                 .claim("roles", roles)
+                .claim("active", isActive)
                 .build();
 
         return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

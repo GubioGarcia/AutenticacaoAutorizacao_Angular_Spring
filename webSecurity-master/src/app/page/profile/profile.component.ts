@@ -15,13 +15,23 @@ import { User } from '../../models/User';
 })
 export class ProfileComponent {
   user = {
-    nome: 'Usuário',
-    email: 'email@example.com',
-    telefone: '556298989898',
-    nivelAcesso: 'Usuário'
+    nome: '',
+    active: '',
+    nivelAcesso: ''
   };
 
   constructor(private _router: Router, private _service: AuthServiceService) {
+  }
+
+  ngOnInit(): void {
+    const loggedUser = this._service.getLoggedUser();
+    if (loggedUser) {
+      this.user.nome = loggedUser.username;
+      this.user.active = loggedUser.active ? 'Ativo' : 'Inativo';
+      this.user.nivelAcesso = loggedUser.roles.join();
+    } else {
+      this._router.navigate(['/login']);
+    }
   }
 
   home(){
