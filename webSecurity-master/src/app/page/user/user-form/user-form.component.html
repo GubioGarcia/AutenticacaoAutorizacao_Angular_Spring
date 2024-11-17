@@ -1,0 +1,18 @@
+<h2>Adicionar Usuário</h2>
+<form (ngSubmit)="adicionarUser()">
+  <div class="input-container">
+    <label for="username"><strong>Nome: </strong></label>
+    <input id="username" type="text" pInputText [(ngModel)]="username" name="username" required />
+
+    <label for="password"><strong>Senha: </strong></label>
+    <input id="password" type="password" pInputText [(ngModel)]="password" name="password" required />
+
+    <label for="role"><strong>Permissão: </strong></label>
+    <p-dropdown id="role" [options]="roles" [(ngModel)]="role" optionLabel="label" optionValue="value" placeholder="Selecione a permissão" name="role" required></p-dropdown>
+  </div>
+  <button type="submit" pButton label="Adicionar usuário"></button>
+  <br><br>
+  <p-button (click)="adm()" label="Listar usuários"></p-button>
+</form>
+
+<p-toast></p-toast>
