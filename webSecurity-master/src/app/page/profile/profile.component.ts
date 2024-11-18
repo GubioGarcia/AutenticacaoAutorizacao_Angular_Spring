@@ -15,7 +15,7 @@ import { User } from '../../models/User';
 })
 export class ProfileComponent {
   user = {
-    nome: '',
+    username: '',
     active: '',
     nivelAcesso: ''
   };
@@ -24,9 +24,9 @@ export class ProfileComponent {
   }
 
   ngOnInit(): void {
-    const loggedUser = this._service.getLoggedUser();
+    const loggedUser = this._service.getUsuarioLogado();
     if (loggedUser) {
-      this.user.nome = loggedUser.username;
+      this.user.username = loggedUser.username;
       this.user.active = loggedUser.active ? 'Ativo' : 'Inativo';
       this.user.nivelAcesso = loggedUser.roles.join();
     } else {

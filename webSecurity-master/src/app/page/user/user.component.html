@@ -5,6 +5,7 @@
       <th>Nome</th>
       <th>Permissão</th>
       <th>Ativo</th>
+      <th *ngIf="isAdmin">Ações</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-user>
@@ -13,6 +14,7 @@
       <td>{{ user.username }}</td>
       <td>{{ user.roles }}</td>
       <td>{{ user.active }}</td>
+      <td *ngIf="isAdmin"><button pButton type="button" label="Habilitar/Desabilitar" class="p-button-warning button-spacing" (click)="listarUsuarios()"></button></td>
     </tr>
   </ng-template>
 </p-table>

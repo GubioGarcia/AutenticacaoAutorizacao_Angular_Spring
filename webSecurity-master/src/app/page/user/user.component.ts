@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { User } from '../../models/User';
+import { AuthServiceService } from '../../service/auth-service.service';
 
 @Component({
   selector: 'app-user',
@@ -32,11 +33,13 @@ export class UserComponent {
   displayDialogEdit: boolean = false;
   displayErrorDialog: boolean = false;
   errorMessage: string = '';
+  isAdmin: boolean = false;
 
-  constructor(private userService: UserService, private messageService: MessageService) {}
+  constructor(private userService: UserService, private authService: AuthServiceService, private messageService: MessageService) {}
 
   ngOnInit() {
     this.listarUsuarios();
+    this.checaAdmin();
   }
 
   listarUsuarios() {
@@ -45,5 +48,12 @@ export class UserComponent {
         this.users = response;
       }
     });
+  }
+
+  checaAdmin() {
+    const loggedUser = this.authService.getUsuarioLogado();
+    if (loggedUser && loggedUser.roles.includes('ADMIN')) {
+      this.isAdmin = this.authService.isAdmin;
+    }
   }
 }

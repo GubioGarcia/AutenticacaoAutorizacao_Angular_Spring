@@ -60,7 +60,7 @@ export class AuthServiceService {
     this.isUser = JSON.parse(localStorage.getItem('userStatus') || 'false');
   }
 
-  getLoggedUser(): User | null {
+  getUsuarioLogado(): User | null {
     const token = localStorage.getItem('token');
     if (!token) return null;
 

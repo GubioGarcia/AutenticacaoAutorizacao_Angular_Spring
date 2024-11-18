@@ -22,6 +22,9 @@ public class StartApplication implements CommandLineRunner {
         // Criação do usuário admin
         createUserIfNotExists("admin", "123", "ADMIN");
 
+        // Criação do usuário gerente
+        createUserIfNotExists("gerente", "123", "GERENTE");
+
         // Criação do usuário user
         createUserIfNotExists("user", "123", "USER");
     }
